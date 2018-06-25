@@ -33,8 +33,8 @@ attachEvent();
 gameloop();  
 }  
 function gameloop(){  
-for(var i=0;i&lt;hearts.length;i++){  
-if(hearts[i].alpha &lt;=0){  
+for(var i=0;i<=hearts.length;i++){  
+if(hearts[i].alpha ==0){  
 document.body.removeChild(hearts[i].el);  
 hearts.splice(i,1);  
 continue;  
