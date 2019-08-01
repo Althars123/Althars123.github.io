@@ -6,16 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://althars123.github.io">
-  <title>小胖胖的blog</title>
+  <title>encryption | 小胖胖的blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="keywords" content="java，database，framework，others">
-<meta property="og:type" content="website">
-<meta property="og:title" content="小胖胖的blog">
-<meta property="og:url" content="https://althars123.github.io/index.html">
+  <meta name="description" content="加密为什么要加密   重要敏感信息泄露，比如密码 请求被篡改 数据泄露 高频次攻击  那对于上述的安全问题有哪些解决办法呢，传输过程可以使用https来对报文进行加解密，除此之外，我们今天要讨论学习的是如果利用RSA加密以及签名来对密码以及服务接口加密。">
+<meta name="keywords" content="java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="encryption">
+<meta property="og:url" content="https://althars123.github.io/decrypt.html">
 <meta property="og:site_name" content="小胖胖的blog">
+<meta property="og:description" content="加密为什么要加密   重要敏感信息泄露，比如密码 请求被篡改 数据泄露 高频次攻击  那对于上述的安全问题有哪些解决办法呢，传输过程可以使用https来对报文进行加解密，除此之外，我们今天要讨论学习的是如果利用RSA加密以及签名来对密码以及服务接口加密。">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="https://www.mdeditor.com/images/logos/markdown.png">
+<meta property="og:updated_time" content="2019-08-01T06:23:10.731Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="小胖胖的blog">
+<meta name="twitter:title" content="encryption">
+<meta name="twitter:description" content="加密为什么要加密   重要敏感信息泄露，比如密码 请求被篡改 数据泄露 高频次攻击  那对于上述的安全问题有哪些解决办法呢，传输过程可以使用https来对报文进行加解密，除此之外，我们今天要讨论学习的是如果利用RSA加密以及签名来对密码以及服务接口加密。">
+<meta name="twitter:image" content="https://www.mdeditor.com/images/logos/markdown.png">
   
     <link rel="alternative" href="/atom.xml" title="小胖胖的blog" type="application/atom+xml">
   
@@ -145,16 +151,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-decrypt" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-decrypt" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/decrypt.html">encryption</a>
+    <h1 class="article-title" itemprop="name">
+      encryption
     </h1>
   
 
@@ -175,12 +179,49 @@
 <li>数据泄露</li>
 <li>高频次攻击</li>
 </ul>
-<p>那对于上述的安全问题有哪些解决办法呢，传输过程可以使用https来对报文进行加解密，除此之外，我们今天要讨论学习的是如果利用RSA加密以及签名来对密码以及服务接口加密。<br>
-        
-          <a class="article-more-a" href="/decrypt.html#more">more >></a>
-        
+<p>那对于上述的安全问题有哪些解决办法呢，传输过程可以使用https来对报文进行加解密，除此之外，我们今天要讨论学习的是如果利用RSA加密以及签名来对密码以及服务接口加密。<br><a id="more"></a></p>
+<h2 id="RSA加密"><a href="#RSA加密" class="headerlink" title="RSA加密"></a>RSA加密</h2><p>加密包含了对称和非对称加密。</p>
+<ul>
+<li>对称加密就是加密和解密用的是同一把钥匙,如https</li>
+<li>非对称加密就是用公钥加密只能用相对应的私钥进行加密，例如RSA加密</li>
+</ul>
+<p>由于非对称加解密对于系统开销较大，所以一般只对一些重要的信息，比如密码等重要敏感信息,<br>RSA的特点是，每次用公钥生成的密文都不一样，但是却私钥解密出一样的原文来，这就是比对称公钥强大的地方，因为如果使用对称加密的话，是可以通过暴力破解出原文，甚至可以直接使用密文发起请求来进行登录，一旦登录后获取token的重要信息，其他接口就为所欲为了（假如只做了token的验证方式）。<br>利用每次生成的不一样密文，我们可以通过两种方式来解决破解问题</p>
+<ol>
+<li>对每次的加密密文登录完后进行缓存，下次请求的时候判定缓存里是否包含请求的密文，包含，直接返回。</li>
+<li>对每次登录前，都从服务器生成一堆公私钥，并把公钥传给前端，登录后在后端对公私钥进行销毁，这样别人即使获得到密文也一样不能登录操作。</li>
+</ol>
+<p>话不多说，直接上代码</p>
+<p>首选是RSA<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.utils;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.commons.codec.binary.Base64;</span><br><span class="line"><span class="keyword">import</span> org.apache.log4j.Logger;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.crypto.Cipher;</span><br><span class="line"><span class="keyword">import</span> java.security.KeyFactory;</span><br><span class="line"><span class="keyword">import</span> java.security.KeyPair;</span><br><span class="line"><span class="keyword">import</span> java.security.KeyPairGenerator;</span><br><span class="line"><span class="keyword">import</span> java.security.SecureRandom;</span><br><span class="line"><span class="keyword">import</span> java.security.interfaces.RSAPrivateKey;</span><br><span class="line"><span class="keyword">import</span> java.security.interfaces.RSAPublicKey;</span><br><span class="line"><span class="keyword">import</span> java.security.spec.PKCS8EncodedKeySpec;</span><br><span class="line"><span class="keyword">import</span> java.security.spec.X509EncodedKeySpec;</span><br><span class="line"><span class="keyword">import</span> java.util.HashMap;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RSAUtil</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Logger logger = Logger.getLogger(RSAUtil.class);</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 用来维护每个用户的公私匙</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> ConcurrentHashMap keysMap ;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 随机生成密钥对</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Map&lt;Integer, String&gt; <span class="title">genKeyPair</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        Map&lt;Integer, String&gt; keyMap = <span class="keyword">new</span> HashMap&lt;Integer, String&gt;();  <span class="comment">//用于封装随机产生的公钥与私钥</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">// KeyPairGenerator类用于生成公钥和私钥对，基于RSA算法生成对象</span></span><br><span class="line">            KeyPairGenerator keyPairGen = KeyPairGenerator.getInstance(<span class="string">"RSA"</span>);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 初始化密钥对生成器，密钥大小为96-1024位</span></span><br><span class="line">            keyPairGen.initialize(<span class="number">1024</span>,<span class="keyword">new</span> SecureRandom());</span><br><span class="line">            <span class="comment">// 生成一个密钥对，保存在keyPair中</span></span><br><span class="line">            KeyPair keyPair = keyPairGen.generateKeyPair();</span><br><span class="line">            RSAPrivateKey privateKey = (RSAPrivateKey) keyPair.getPrivate();   <span class="comment">// 得到私钥</span></span><br><span class="line">            RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();  <span class="comment">// 得到公钥</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">            <span class="comment">// 得到公钥字符串</span></span><br><span class="line">            String publicKeyString = <span class="keyword">new</span> String(Base64.encodeBase64(publicKey.getEncoded()));</span><br><span class="line">            <span class="comment">// 得到私钥字符串</span></span><br><span class="line">            String privateKeyString = <span class="keyword">new</span> String(Base64.encodeBase64((privateKey.getEncoded())));</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 将公钥和私钥保存到Map</span></span><br><span class="line">            keyMap.put(<span class="number">0</span>,publicKeyString);  <span class="comment">//0表示公钥</span></span><br><span class="line">            keyMap.put(<span class="number">1</span>,privateKeyString);  <span class="comment">//1表示私钥</span></span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            logger.info(<span class="string">"生成公钥私钥异常："</span>+e.getMessage());</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> keyMap;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * RSA公钥加密</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> str  需要加密的字符串</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> publicKey  公钥</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 公钥加密后的内容</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">encrypt</span><span class="params">( String str, String publicKey )</span></span>&#123;</span><br><span class="line">        String outStr=<span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">//base64编码的公钥</span></span><br><span class="line">            <span class="keyword">byte</span>[] decoded = Base64.decodeBase64(publicKey);</span><br><span class="line">            RSAPublicKey pubKey = (RSAPublicKey)     KeyFactory.getInstance(<span class="string">"RSA"</span>).generatePublic(<span class="keyword">new</span> X509EncodedKeySpec(decoded));</span><br><span class="line">            <span class="comment">//RSA加密</span></span><br><span class="line">            Cipher cipher = Cipher.getInstance(<span class="string">"RSA"</span>);</span><br><span class="line">            cipher.init(Cipher.ENCRYPT_MODE, pubKey);</span><br><span class="line">            outStr = Base64.encodeBase64String(cipher.doFinal(str.getBytes(<span class="string">"UTF-8"</span>)));</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            logger.info(<span class="string">"使用公钥加密【"</span>+str+<span class="string">"】异常："</span>+e.getMessage());</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> outStr;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * RSA私钥解密</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> str  加密字符串</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> privateKey  私钥</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 私钥解密后的内容</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">decrypt</span><span class="params">(String str, String privateKey)</span></span>&#123;</span><br><span class="line">        String outStr=<span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">//64位解码加密后的字符串</span></span><br><span class="line">            <span class="keyword">byte</span>[] inputByte = Base64.decodeBase64(str.getBytes(<span class="string">"UTF-8"</span>));</span><br><span class="line">            <span class="comment">//base64编码的私钥</span></span><br><span class="line">            <span class="keyword">byte</span>[] decoded = Base64.decodeBase64(privateKey);</span><br><span class="line">            RSAPrivateKey priKey = (RSAPrivateKey) KeyFactory.getInstance(<span class="string">"RSA"</span>).generatePrivate(<span class="keyword">new</span> PKCS8EncodedKeySpec(decoded));</span><br><span class="line">            <span class="comment">//RSA解密</span></span><br><span class="line">            Cipher cipher = Cipher.getInstance(<span class="string">"RSA"</span>);</span><br><span class="line">            cipher.init(Cipher.DECRYPT_MODE, priKey);</span><br><span class="line">            outStr = <span class="keyword">new</span> String(cipher.doFinal(inputByte));</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            logger.info(<span class="string">"使用私钥解密异常："</span>+e.getMessage());</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> outStr;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>前端用crypto-js进行加密，npm i jsencrypt<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> JSEncrypt <span class="keyword">from</span> <span class="string">'jsencrypt'</span>;</span><br><span class="line"><span class="keyword">const</span> encrypt = <span class="keyword">new</span> JSEncrypt();</span><br><span class="line">encrypt.setPublicKey(<span class="string">'你的公钥'</span>);</span><br><span class="line">password = encrypt.encrypt(‘你的密码’);<span class="comment">// 加密后的字符串</span></span><br></pre></td></tr></table></figure></p>
+<p>后面具体的实现代码就不详细写了，自由发挥，具体的思路如下</p>
+<ol>
+<li>前端先发送一个获取公钥的请求，后端生成公私钥，并生成随机流水号，在keysMap put (随机流水号，私钥)，并把公钥和随机流水号返回前端</li>
+<li>前端发送登录接口，附带随机流水号，服务端根据随机流水号获取私钥，对密文解密来判断密码是否正确，如果正确，在keysMap 销毁相应的键值对，使下次的登录无效</li>
+</ol>
+
       
 
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
       
     </div>
     <div class="article-info article-info-index">
@@ -202,10 +243,73 @@
       
 
       
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=https://althars123.github.io/decrypt.html" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="/blockchain.html" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">区块链与比特币的简易理解</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -220,161 +324,48 @@
         </div>
         
         
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-blockchain" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blockchain.html">区块链与比特币的简易理解</a>
-    </h1>
-  
-
-        
-        <a href="/blockchain.html" class="archive-article-date">
-  	<time datetime="2018-06-19T06:48:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-19</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>区块链</strong></p>
-<p>区块链本质上是一个去中心化的分布式账本数据库。</p>
-<p><strong>去中心化</strong></p>
-<p>===================</p>
-<p>先来考虑一个中心化集中式处理的过程。你要在某宝上买一部手机，交易流程是：你将钱打给支付宝－支付宝收款后通知卖家发货－卖家发货－你确认收货－支付宝把钱打给卖家。</p>
-        
-          <a class="article-more-a" href="/blockchain.html#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">blockChain</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#加密"><span class="toc-number">1.</span> <span class="toc-text">加密</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#RSA加密"><span class="toc-number">1.1.</span> <span class="toc-text">RSA加密</span></a></li></ol></li></ol>
+                    </div>
+                </span>
             </div>
         </div>
         
-        
     </div>
 </aside>
 
 
 
-
   
-    <article id="post-java_memory" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/java_memory.html">java堆，栈，方法区，常量池</a>
-    </h1>
   
 
-        
-        <a href="/java_memory.html" class="archive-article-date">
-  	<time datetime="2018-06-15T06:22:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-15</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>1 :栈</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">在函数中定义的一些基本类型的变量数据和对象的引用变量都在函数的栈内存中分配。  </span><br><span class="line">当在一段代码块定义一个变量时，Java就在栈中为这个变量分配内存空间，当该变量退出该作用域后，Java会自动释放掉为该变量所分配的内存空间，该内存空间可以立即被另作他用。</span><br><span class="line">每个线程包含一个栈区，每个栈中的数据(原始类型和对象引用)都是私有的，其他栈不能访问。</span><br><span class="line"></span><br><span class="line">栈分为3个部分：</span><br><span class="line">1. 基本类型变量区</span><br><span class="line">2. 执行环境上下文</span><br><span class="line">3. 操作指令区(存放操作指令)</span><br></pre></td></tr></table></figure></p>
-        
-          <a class="article-more-a" href="/java_memory.html#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
+  
 
   
+
+  
+  <div id="gitment-ctn"></div> 
+<link rel="stylesheet" href="//imsun.github.io/gitment/style/default.css">
+<script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+  id: "encryption",
+  owner: 'Althars123',
+  repo: 'Althars123.github.io',
+  oauth: {
+    client_id: 'e60f1206e134cb96630e',
+    client_secret: '02195c5a98d79ea82b274ed26e8eca59ee70137c',
+  },
+})
+gitment.render('gitment-ctn')
+</script>
   
 
 
@@ -397,8 +388,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
