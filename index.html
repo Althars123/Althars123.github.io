@@ -167,10 +167,87 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><strong>code</strong></p>
-<p>个人研究出的效率最高的算法，这里设定背景为组合主键</p>
-<p>DELETE<br>FROM<br>    TABLE_NAME<br>WHERE<br>    ROWID IN (<br>    SELECT ROWID<br>    FROM<br>        (<br>        SELECT ROWID<br>            ,<br>            column1,<br>            column2<br>        FROM<br>            TABLE_NAME<br>        WHERE<br>        ROWID NOT IN ( SELECT min( ROWID ) FROM TABLE_NAME GROUP BY column1, column2 HAVING count( <em> ) &gt; 1 ))<br>    WHERE<br>    ( column1, column2 ) IN ( SELECT column1, column2 FROM TABLE_NAME GROUP BY column1, column2 HAVING count( </em> ) &gt; 1 )<br>    )</p>
+        <p>个人研究出的效率最高的算法，这里设定背景为组合主键</p>
+        
+          <a class="article-more-a" href="/oracle-sql.html#more">more >></a>
+        
+      
 
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-springboot-schedual" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/springboot-schedual.html">springboot定时器使用注意点</a>
+    </h1>
+  
+
+        
+        <a href="/springboot-schedual.html" class="archive-article-date">
+  	<time datetime="2020-06-11T06:22:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-11</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>简介</strong></p>
+<p>spring框架有提供定时器，相对于quartz而言，比较轻量，用法也很简单，只要两步</p>
+<ul>
+<li>在需要定时的任务方法上加@Scheduled </li>
+<li>在springboot启动类添加@EnableScheduling</li>
+</ul>
+        
+          <a class="article-more-a" href="/springboot-schedual.html#more">more >></a>
+        
       
 
       
