@@ -147,6 +147,179 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-network-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/network-1.html">计算机网络-传输层</a>
+    </h1>
+  
+
+        
+        <a href="/network-1.html" class="archive-article-date">
+  	<time datetime="2020-07-03T09:22:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-03</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>简介</strong></p>
+<p>计算机网络分层的第二层,主要解决的是传输的可靠性</p>
+<p>#1 传输层的多路复用</p>
+<p>轮流检查每个应用层所在的端口中是否有数据，有的话，则把数据进行封装，传输<br>多路分解：等数据到达目的主机后，由主机的传输层读取相应的端口号，然后把数据丢到端口相匹配的应用中去<br>TCP是绑定连接进行复用和分解的</p>
+<p>#2 端口号分类：</p>
+<ol>
+<li>熟知/公认端口号0到1023</li>
+<li>等级端口号 1024到49151 为没有熟知端口号的应用程序使用的，必须在IANA登记</li>
+<li>客户端口号/短暂端口号 49151到65535，留给客户进程选择暂时使用</li>
+</ol>
+<p>#3 可靠数据传输原理：</p>
+<ol>
+<li>差错检测：主要通过差错编码的方式实现比特差错检测</li>
+<li>确认：接收方向发送方反馈接收状态</li>
+<li>重传： 发送没有正确接收的数据</li>
+<li>序号：确保数据按序提交</li>
+<li>计时器：解决数据丢失问题</li>
+</ol>
+<p>#3 可靠性传输的协议：</p>
+<ol>
+<li><p>停-等协议<br>每发送一个报文分组，就停止等待接收方的确认，其实发送和接收窗口只有1的滑动窗口协议<br>ACK: 数据正常发送给发送方<br>NAK：数据异常，丢弃改包，发送给发送方 </p>
+</li>
+<li><p>滑动窗口协议<br>使用流水线的方式发送数据分组的时候，发送方和接收方都要有一定缓存数据分组的能力，<br>这就是使用要滑动窗口，在滑动窗口中的分组最左边的数据确认正常到达后，窗口才会往右滑动，<br>下一个数据才会进来</p>
+</li>
+</ol>
+<p>#4 TCP协议首部结构：<br>首部占20字节，其中包含源端口，目标端口，序号，确认号等，可扩充</p>
+<p>#5 TCP握手和挥手的过程：</p>
+<ol>
+<li>握手<br>第一次：客户端发送SYN=1(同步位标识),seq=x(序号是从多少开始)，并进入同步状态<br>第二次：服务端接收请求后，发送SYN=1,seq=y,ack=x+1(确认号，当表示ACK=1才有意义，下次可以发送编号为x+1的数据)，ACK=1(正常接收标识 ),并进入同步状态<br>第三次：客户端接接收到服务端返回数据后，再次发送seq=x+1,ack=y+1,ACK=1，进入建立连接状态，服务端接收到后也进入连接状态</li>
+</ol>
+<p>2.挥手<br>第一次：客户端或者服务端（两端都可以主动发起关闭连接请求）发起关闭连接的请求: FIN=1(关闭连接标识),seq =x,状态由连接变成FIN-WAIT-1<br>第二次：响应方接收到请求后，返回ACK=1,seq=w,ack=x+1，状态进入CLOSE-WAIT,请求方接收到后，不再发送请求，进 入FIN-WAIT-2<br>第三次：由响应方主动发出请求，FIN =1,seq = v ,ACK=1,ack=x+1(由于发送方不再发送数据，所以ack确认号还是针对最开始发送的那条数据),进入LAST-ACK状态，等待最后的ACK<br>第四次: 这次由发起方做出响应，发送AKC=1,ack=v+1,seq=x+1，响应收到后，即可关闭连接，而发送方等待2MSL之后关闭</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">network</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-network-2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/network-2.html">计算机网络-应用层</a>
+    </h1>
+  
+
+        
+        <a href="/network-2.html" class="archive-article-date">
+  	<time datetime="2020-07-02T09:22:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-02</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>简介</strong></p>
+<p>计算机网络分层结构的最上层，其作用是在实现多个系统应用进程相互通信的同时,完成一系列业务处理所需的服务</p>
+        
+          <a class="article-more-a" href="/network-2.html#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">network</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-springboot-schedual" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -618,11 +791,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color1">blockChain</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">blockChain</a>
+                <a href="javascript:void(0)" class="js-tag color3">network</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
               </li>
             
             <div class="clearfix"></div>
