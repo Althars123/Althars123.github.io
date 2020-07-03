@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="小胖胖的blog">
 <meta property="og:description" content="简介 计算机网络存在许多薄弱的点，容易被人抓住漏洞，所以需要通过各种措施来解决网络安全问题。">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-07-03T04:08:04.614Z">
+<meta property="og:updated_time" content="2020-07-03T06:50:34.553Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="计算机网络-网络安全基础">
 <meta name="twitter:description" content="简介 计算机网络存在许多薄弱的点，容易被人抓住漏洞，所以需要通过各种措施来解决网络安全问题。">
@@ -173,7 +173,7 @@
 <p>计算机网络存在许多薄弱的点，容易被人抓住漏洞，所以需要通过各种措施来解决网络安全问题。</p>
 <a id="more"></a>
 <h2 id="1-基本属性"><a href="#1-基本属性" class="headerlink" title="1 基本属性"></a>1 基本属性</h2><p>1 机密性<br>2 消息完整性<br>3 可访问与可用性<br>4 身份认证</p>
-<h2 id="2-网络安全威胁"><a href="#2-网络安全威胁" class="headerlink" title="2 网络安全威胁"></a>2 网络安全威胁</h2><p>窃听 例如在物理层，通过产生的磁场变化来还原信号，电脑屏幕产生的电子辐射来还原信号<br>插入 完整性的破坏<br>假冒 假装自己是其他人<br>劫持  篡改信息<br>拒绝服务DOS （以前windows有一个漏送 用ICMP 发送一个数据很大的请求  会导致系统崩溃）和分布式拒绝服务DDOS（黑客利用一台计算机，控制多台计算机—僵尸网络，同时发送请求，占满带宽）<br>映射 端口扫描，找出漏洞<br>嗅探 通过编程修改网卡 mac地址匹配方式，可以接收到局域网广播的数据<br>IP 欺骗  通过编程的方式 修改 IP 地址</p>
+<h2 id="2-网络安全威胁"><a href="#2-网络安全威胁" class="headerlink" title="2 网络安全威胁"></a>2 网络安全威胁</h2><p>1 窃听 例如在物理层，通过产生的磁场变化来还原信号，电脑屏幕产生的电子辐射来还原信号<br>2 插入 完整性的破坏<br>3 假冒 假装自己是其他人<br>4 劫持  篡改信息<br>5 拒绝服务DOS （以前windows有一个漏送 用ICMP 发送一个数据很大的请求  会导致系统崩溃）和分布式拒绝服务DDOS（黑客利用一台计算机，控制多台计算机—僵尸网络，同时发送请求，占满带宽）<br>6 映射 端口扫描，找出漏洞<br>7 嗅探 通过编程修改网卡 mac地址匹配方式，可以接收到局域网广播的数据<br>8 IP 欺骗  通过编程的方式 修改 IP 地址</p>
 <h2 id="3-数据加密与数字签名"><a href="#3-数据加密与数字签名" class="headerlink" title="3 数据加密与数字签名"></a>3 数据加密与数字签名</h2><p>基本加密方式:替换和打乱顺序<br>密钥方式：<br>对称加密，加密和解密的钥匙一致,如RSA<br>非对称加密，加密和解密的钥匙不一致，如AES</p>
 <p>一般是对原报文的摘要进行签名，比如通过散列函数（MD5或者SHA1）算出来的较短的数据串再做一层加密</p>
 <h2 id="4-防火墙"><a href="#4-防火墙" class="headerlink" title="4 防火墙"></a>4 防火墙</h2><p>无状态分组过滤器，有状态分组过滤器，应用网关</p>
