@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="小胖胖的blog">
 <meta property="og:description" content="简介 计算机网络分层的第二层,主要解决的是传输的可靠性">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-07-03T01:44:02.103Z">
+<meta property="og:updated_time" content="2020-07-03T01:55:25.941Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="计算机网络-传输层">
 <meta name="twitter:description" content="简介 计算机网络分层的第二层,主要解决的是传输的可靠性">
@@ -185,14 +185,14 @@
 <li>序号：确保数据按序提交</li>
 <li>计时器：解决数据丢失问题</li>
 </ol>
-<h2 id="3-可靠性传输的协议："><a href="#3-可靠性传输的协议：" class="headerlink" title="3 可靠性传输的协议："></a>3 可靠性传输的协议：</h2><ol>
+<h2 id="4-可靠性传输的协议："><a href="#4-可靠性传输的协议：" class="headerlink" title="4 可靠性传输的协议："></a>4 可靠性传输的协议：</h2><ol>
 <li><p>停-等协议<br>每发送一个报文分组，就停止等待接收方的确认，其实发送和接收窗口只有1的滑动窗口协议<br>ACK: 数据正常发送给发送方<br>NAK：数据异常，丢弃改包，发送给发送方 </p>
 </li>
 <li><p>滑动窗口协议<br>使用流水线的方式发送数据分组的时候，发送方和接收方都要有一定缓存数据分组的能力，<br>这就是使用要滑动窗口，在滑动窗口中的分组最左边的数据确认正常到达后，窗口才会往右滑动，<br>下一个数据才会进来</p>
 </li>
 </ol>
-<h2 id="4-TCP协议首部结构："><a href="#4-TCP协议首部结构：" class="headerlink" title="4 TCP协议首部结构："></a>4 TCP协议首部结构：</h2><p>首部占20字节，其中包含源端口，目标端口，序号，确认号等，可扩充</p>
-<h2 id="5-TCP握手和挥手的过程："><a href="#5-TCP握手和挥手的过程：" class="headerlink" title="5 TCP握手和挥手的过程："></a>5 TCP握手和挥手的过程：</h2><ol>
+<h2 id="5-TCP协议首部结构："><a href="#5-TCP协议首部结构：" class="headerlink" title="5 TCP协议首部结构："></a>5 TCP协议首部结构：</h2><p>首部占20字节，其中包含源端口，目标端口，序号，确认号等，可扩充</p>
+<h2 id="6-TCP握手和挥手的过程："><a href="#6-TCP握手和挥手的过程：" class="headerlink" title="6 TCP握手和挥手的过程："></a>6 TCP握手和挥手的过程：</h2><ol>
 <li>握手<br>第一次：客户端发送SYN=1(同步位标识),seq=x(序号是从多少开始)，并进入同步状态<br>第二次：服务端接收请求后，发送SYN=1,seq=y,ack=x+1(确认号，当表示ACK=1才有意义，下次可以发送编号为x+1的数据)，ACK=1(正常接收标识 ),并进入同步状态<br>第三次：客户端接接收到服务端返回数据后，再次发送seq=x+1,ack=y+1,ACK=1，进入建立连接状态，服务端接收到后也进入连接状态</li>
 </ol>
 <p>2.挥手<br>第一次：客户端或者服务端（两端都可以主动发起关闭连接请求）发起关闭连接的请求: FIN=1(关闭连接标识),seq =x,状态由连接变成FIN-WAIT-1<br>第二次：响应方接收到请求后，返回ACK=1,seq=w,ack=x+1，状态进入CLOSE-WAIT,请求方接收到后，不再发送请求，进 入FIN-WAIT-2<br>第三次：由响应方主动发出请求，FIN =1,seq = v ,ACK=1,ack=x+1(由于发送方不再发送数据，所以ack确认号还是针对最开始发送的那条数据),进入LAST-ACK状态，等待最后的ACK<br>第四次: 这次由发起方做出响应，发送AKC=1,ack=v+1,seq=x+1，响应收到后，即可关闭连接，而发送方等待2MSL之后关闭</p>
@@ -329,7 +329,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-传输层的多路复用"><span class="toc-number">1.</span> <span class="toc-text">1 传输层的多路复用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-端口号分类："><span class="toc-number">2.</span> <span class="toc-text">2 端口号分类：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-可靠数据传输原理："><span class="toc-number">3.</span> <span class="toc-text">3 可靠数据传输原理：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-可靠性传输的协议："><span class="toc-number">4.</span> <span class="toc-text">3 可靠性传输的协议：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-TCP协议首部结构："><span class="toc-number">5.</span> <span class="toc-text">4 TCP协议首部结构：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-TCP握手和挥手的过程："><span class="toc-number">6.</span> <span class="toc-text">5 TCP握手和挥手的过程：</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-传输层的多路复用"><span class="toc-number">1.</span> <span class="toc-text">1 传输层的多路复用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-端口号分类："><span class="toc-number">2.</span> <span class="toc-text">2 端口号分类：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-可靠数据传输原理："><span class="toc-number">3.</span> <span class="toc-text">3 可靠数据传输原理：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-可靠性传输的协议："><span class="toc-number">4.</span> <span class="toc-text">4 可靠性传输的协议：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-TCP协议首部结构："><span class="toc-number">5.</span> <span class="toc-text">5 TCP协议首部结构：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-TCP握手和挥手的过程："><span class="toc-number">6.</span> <span class="toc-text">6 TCP握手和挥手的过程：</span></a></li></ol>
                     </div>
                 </span>
             </div>
