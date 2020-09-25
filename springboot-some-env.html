@@ -6,16 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://althars123.github.io">
-  <title>Archives: 2019 | 小胖胖的blog</title>
+  <title>springboot定时器使用注意点 | 小胖胖的blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="keywords" content="java，database，framework，others">
-<meta property="og:type" content="website">
-<meta property="og:title" content="小胖胖的blog">
-<meta property="og:url" content="https://althars123.github.io/archives/2019/index.html">
+  <meta name="description" content="简介 spring框架有提供定时器，相对于quartz而言，比较轻量，用法也很简单，只要两步  在需要定时的任务方法上加@Scheduled  在springboot启动类添加@EnableScheduling">
+<meta name="keywords" content="java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="springboot定时器使用注意点">
+<meta property="og:url" content="https://althars123.github.io/springboot-some-env.html">
 <meta property="og:site_name" content="小胖胖的blog">
+<meta property="og:description" content="简介 spring框架有提供定时器，相对于quartz而言，比较轻量，用法也很简单，只要两步  在需要定时的任务方法上加@Scheduled  在springboot启动类添加@EnableScheduling">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2020-06-12T07:49:51.790Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="小胖胖的blog">
+<meta name="twitter:title" content="springboot定时器使用注意点">
+<meta name="twitter:description" content="简介 spring框架有提供定时器，相对于quartz而言，比较轻量，用法也很简单，只要两步  在需要定时的任务方法上加@Scheduled  在springboot启动类添加@EnableScheduling">
   
     <link rel="alternative" href="/atom.xml" title="小胖胖的blog" type="application/atom+xml">
   
@@ -145,36 +149,81 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-springboot-some-env" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/decrypt.html" class="archive-article-date">
-  	<time datetime="2019-07-31T06:23:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-31</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/decrypt.html">加密</a>
+    <h1 class="article-title" itemprop="name">
+      springboot定时器使用注意点
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/springboot-some-env.html" class="archive-article-date">
+  	<time datetime="2020-06-11T06:22:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-11</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>简介</strong></p>
+<p>spring框架有提供定时器，相对于quartz而言，比较轻量，用法也很简单，只要两步</p>
+<ul>
+<li>在需要定时的任务方法上加@Scheduled </li>
+<li>在springboot启动类添加@EnableScheduling</li>
+</ul>
+<a id="more"></a>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">@Scheduled</span>(cron = <span class="string">"0/30 * * * * ?"</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testTask1</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line"></span><br><span class="line">    Thread.sleep(<span class="number">10000</span>);</span><br><span class="line">    System.out.println(Thread.currentThread().getName()+<span class="string">"完成testTask1,完成时间:"</span>+<span class="keyword">new</span> Date());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@Scheduled</span>(cron = <span class="string">"0/30 * * * * ?"</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testTask2</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line"></span><br><span class="line">    Thread.sleep(<span class="number">10000</span>);</span><br><span class="line">    System.out.println(Thread.currentThread().getName()+<span class="string">"完成testTask2,完成时间:"</span>+<span class="keyword">new</span> Date());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@EnableScheduling</span><span class="comment">//开启定时任务注解</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Application</span>  </span>&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>FBIWARNING</strong></p>
+<p>虽然用起来很方便，但是坑还是不少的。</p>
+<p>1 如果定时器实例是默认配置的话，那么所有的定时任务是在一个单线程上调度完成的，如上图，两个任务在同一时间点触发，它会等第一个任务完成，才会执行第二个任务，输出如下图</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">scheduling-<span class="number">1</span>完成testTask1,完成时间:Fri Jun <span class="number">12</span> <span class="number">11</span>:<span class="number">25</span>:<span class="number">40</span> CST <span class="number">2020</span></span><br><span class="line">scheduling-<span class="number">1</span>完成testTask2,完成时间:Fri Jun <span class="number">12</span> <span class="number">11</span>:<span class="number">25</span>:<span class="number">50</span> CST <span class="number">2020</span></span><br></pre></td></tr></table></figure>
+<p>这就导致第二个定时任务没有按照我们想要的时间点运行（当然如果你的需要就是要单线程执行那另当别论~）<br>解决办法:让单线程调度变成多线程调度,自定义TaskScheduler实例，线程池大小调整<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">@EnableScheduling</span><span class="comment">//开启定时任务注解</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Application</span>  </span>&#123;</span><br><span class="line"> <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> TaskScheduler <span class="title">taskScheduler</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        ThreadPoolTaskScheduler taskScheduler = <span class="keyword">new</span> ThreadPoolTaskScheduler();</span><br><span class="line">        taskScheduler.setPoolSize(<span class="number">50</span>);</span><br><span class="line">        <span class="keyword">return</span> taskScheduler;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>输入如下:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">taskScheduler-<span class="number">2</span>完成testTask1,完成时间:Fri Jun <span class="number">12</span> <span class="number">15</span>:<span class="number">19</span>:<span class="number">10</span> CST <span class="number">2020</span></span><br><span class="line">taskScheduler-<span class="number">1</span>完成testTask2,完成时间:Fri Jun <span class="number">12</span> <span class="number">15</span>:<span class="number">19</span>:<span class="number">10</span> CST <span class="number">2020</span></span><br></pre></td></tr></table></figure></p>
+<p>同时完成.</p>
+<p>2 解决了多任务之间的时间点冲突问题，你以为就完了，这事还没完呢~</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">//每3秒钟执行一次</span></span><br><span class="line">   <span class="meta">@Scheduled</span>(cron = <span class="string">"0/3 * * * * ?"</span>)</span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testTask1</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line"></span><br><span class="line">       Thread.sleep(<span class="number">10000</span>);</span><br><span class="line">       System.out.println(Thread.currentThread().getName()+<span class="string">"完成testTask1,完成时间:"</span>+<span class="keyword">new</span> Date());</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<p>我现在每3秒执行一次，一次要执行10秒钟，看看结果如何<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">taskScheduler-<span class="number">1</span>完成testTask1,完成时间:Fri Jun <span class="number">12</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">28</span> CST <span class="number">2020</span></span><br><span class="line">taskScheduler-<span class="number">1</span>完成testTask1,完成时间:Fri Jun <span class="number">12</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">40</span> CST <span class="number">2020</span></span><br></pre></td></tr></table></figure></p>
+<p>果然，虽然我们开启了多线程调度模式，但是同一个方法的任务还是没有按时启动，也是等到上个任务结束才能重新启动，那如果我们任务不管上个任务结束没结束都准时启动怎么办法呢，我们看看@Scheduled这个注解有什么属性<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">@Target</span>(&#123;ElementType.METHOD, ElementType.ANNOTATION_TYPE&#125;)</span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Repeatable</span>(Schedules.class)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Scheduled &#123;</span><br><span class="line">    String CRON_DISABLED = <span class="string">"-"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">String <span class="title">cron</span><span class="params">()</span> <span class="keyword">default</span> ""</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">String <span class="title">zone</span><span class="params">()</span> <span class="keyword">default</span> ""</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">long</span> <span class="title">fixedDelay</span><span class="params">()</span> <span class="keyword">default</span> -1L</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">String <span class="title">fixedDelayString</span><span class="params">()</span> <span class="keyword">default</span> ""</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">long</span> <span class="title">fixedRate</span><span class="params">()</span> <span class="keyword">default</span> -1L</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">String <span class="title">fixedRateString</span><span class="params">()</span> <span class="keyword">default</span> ""</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">long</span> <span class="title">initialDelay</span><span class="params">()</span> <span class="keyword">default</span> -1L</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">String <span class="title">initialDelayString</span><span class="params">()</span> <span class="keyword">default</span> ""</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>fixedDelay:表示的是上次的任务结束到下次任务的开始间隔时间<br>fixedRate：上次的任务开始时间到下次的任务开始时间</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">  <span class="meta">@Scheduled</span>(fixedDelay = <span class="number">5</span>*<span class="number">1000</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testTask1</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line"></span><br><span class="line">        Thread.sleep(<span class="number">10000</span>);</span><br><span class="line">        System.out.println(Thread.currentThread().getName()+<span class="string">"完成testTask1,完成时间:"</span>+<span class="keyword">new</span> Date());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//输出</span></span><br><span class="line">taskScheduler-<span class="number">1</span>完成testTask1,完成时间:Fri Jun <span class="number">12</span> <span class="number">15</span>:<span class="number">31</span>:<span class="number">49</span> CST <span class="number">2020</span></span><br><span class="line">taskScheduler-<span class="number">1</span>完成testTask1,完成时间:Fri Jun <span class="number">12</span> <span class="number">15</span>:<span class="number">32</span>:<span class="number">04</span> CST <span class="number">2020</span></span><br></pre></td></tr></table></figure>
+<p>相差15秒，说明是等上次结束后，过了5秒钟后才开始下一次任务</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">  <span class="meta">@Scheduled</span>(fixedRate = <span class="number">5</span>*<span class="number">1000</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testTask1</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line"></span><br><span class="line">        Thread.sleep(<span class="number">10000</span>);</span><br><span class="line">        System.out.println(Thread.currentThread().getName()+<span class="string">"完成testTask1,完成时间:"</span>+<span class="keyword">new</span> Date());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//输出</span></span><br><span class="line">taskScheduler-<span class="number">1</span>完成testTask1,完成时间:Fri Jun <span class="number">12</span> <span class="number">15</span>:<span class="number">35</span>:<span class="number">06</span> CST <span class="number">2020</span></span><br><span class="line">taskScheduler-<span class="number">1</span>完成testTask1,完成时间:Fri Jun <span class="number">12</span> <span class="number">15</span>:<span class="number">35</span>:<span class="number">16</span> CST <span class="number">2020</span></span><br></pre></td></tr></table></figure>
+<p>相差15秒，说明是等上次结束后，立刻就开始之前已经到时间点在排队的任务。</p>
+<p>这么说来，如果我就要每个任务按时启动，咋办呢？ 嗯，用异步就完事了，在方法上加上 @Async<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">  <span class="meta">@Scheduled</span>(fixedRate = <span class="number">5</span>*<span class="number">1000</span>)</span><br><span class="line">  <span class="meta">@Async</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testTask1</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line"></span><br><span class="line">        Thread.sleep(<span class="number">10000</span>);</span><br><span class="line">        System.out.println(Thread.currentThread().getName()+<span class="string">"完成testTask1,完成时间:"</span>+<span class="keyword">new</span> Date());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//输出</span></span><br><span class="line">thread-<span class="number">1</span>完成testTask1,完成时间:Fri Jun <span class="number">12</span> <span class="number">15</span>:<span class="number">39</span>:<span class="number">31</span> CST <span class="number">2020</span></span><br><span class="line">thread-<span class="number">2</span>完成testTask1,完成时间:Fri Jun <span class="number">12</span> <span class="number">15</span>:<span class="number">39</span>:<span class="number">36</span> CST <span class="number">2020</span></span><br><span class="line">thread-<span class="number">3</span>完成testTask1,完成时间:Fri Jun <span class="number">12</span> <span class="number">15</span>:<span class="number">39</span>:<span class="number">41</span> CST <span class="number">2020</span></span><br></pre></td></tr></table></figure></p>
+<p>发现准时干活了~ yeah！  原理就是在taskScheduler-X 线程在分配调度改方法时候，就起了另外一个线程thread-x 去接了他的活，告诉taskScheduler说：“大哥大哥，这事就是包在俺身上，你忙你的去吧”，然后taskScheduler表示ok，交给你我很放心，然后就撒手不管，没我啥事，我走了。</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -186,19 +235,144 @@
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=https://althars123.github.io/springboot-some-env.html" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/springboot-schedual.html" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          springboot定时器使用注意点
+        
+      </div>
+    </a>
   
   
-    </div></section>
+    <a href="/decrypt.html" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">加密</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    目录，不存在的…
+                    </div>
+                </span>
+            </div>
+        </div>
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
+
+  
+  <div id="gitment-ctn"></div> 
+<link rel="stylesheet" href="//imsun.github.io/gitment/style/default.css">
+<script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+  id: "springboot定时器使用注意点",
+  owner: 'Althars123',
+  repo: 'Althars123.github.io',
+  oauth: {
+    client_id: 'e60f1206e134cb96630e',
+    client_secret: '02195c5a98d79ea82b274ed26e8eca59ee70137c',
+  },
+})
+gitment.render('gitment-ctn')
+</script>
+  
 
 
           </div>
@@ -221,8 +395,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

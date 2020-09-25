@@ -6,16 +6,27 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://althars123.github.io">
-  <title>Archives: 2019 | 小胖胖的blog</title>
+  <title>springboot 多环境配置 | 小胖胖的blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="keywords" content="java，database，framework，others">
-<meta property="og:type" content="website">
-<meta property="og:title" content="小胖胖的blog">
-<meta property="og:url" content="https://althars123.github.io/archives/2019/index.html">
+  <meta name="description" content="使用方法 springboot提供了非常方便的多环境配置方法">
+<meta name="keywords" content="java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="springboot 多环境配置">
+<meta property="og:url" content="https://althars123.github.io/2020-09-19-springboot-多环境配置.html">
 <meta property="og:site_name" content="小胖胖的blog">
+<meta property="og:description" content="使用方法 springboot提供了非常方便的多环境配置方法">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="e:/博客/blog/public/img/image-20200925103116487.png">
+<meta property="og:image" content="e:/博客/blog/public/img/image-20200925111638043.png">
+<meta property="og:image" content="e:/博客/blog/public/img/image-20200925111905573.png">
+<meta property="og:image" content="e:/博客/blog/public/img/image-20200925112108649.png">
+<meta property="og:image" content="e:/博客/blog/public/img/image-20200925112832639.png">
+<meta property="og:image" content="e:/博客/blog/public/img/image-20200925113532736.png">
+<meta property="og:updated_time" content="2020-09-25T03:36:15.345Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="小胖胖的blog">
+<meta name="twitter:title" content="springboot 多环境配置">
+<meta name="twitter:description" content="使用方法 springboot提供了非常方便的多环境配置方法">
+<meta name="twitter:image" content="e:/博客/blog/public/img/image-20200925103116487.png">
   
     <link rel="alternative" href="/atom.xml" title="小胖胖的blog" type="application/atom+xml">
   
@@ -145,36 +156,82 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-2020-09-19-springboot-多环境配置" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/decrypt.html" class="archive-article-date">
-  	<time datetime="2019-07-31T06:23:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-31</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/decrypt.html">加密</a>
+    <h1 class="article-title" itemprop="name">
+      springboot 多环境配置
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2020-09-19-springboot-多环境配置.html" class="archive-article-date">
+  	<time datetime="2020-09-19T02:22:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-19</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>使用方法</strong></p>
+<p>springboot提供了非常方便的多环境配置方法</p>
+<a id="more"></a>
+<p>首先我们建立多个配置，约定是按照application打头，如图</p>
+<p><img src="E:\博客\blog\public\img\image-20200925103116487.png" alt="image-20200925103116487"></p>
+<p>具体内容如下:</p>
+<p>application.xml</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">spring:</span><br><span class="line">  profiles:</span><br><span class="line">    active: test</span><br></pre></td></tr></table></figure>
+<p>application-dev.xml</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">server:</span><br><span class="line">  port: 8888</span><br><span class="line">  servlet:</span><br><span class="line">    context-path: /engine</span><br><span class="line"><span class="tag">&lt;<span class="name">!-数据库，redis等配置省略-</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>application-test.xml</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">server:</span><br><span class="line">  port: 8889</span><br><span class="line">  servlet:</span><br><span class="line">    context-path: /engine</span><br><span class="line"><span class="tag">&lt;<span class="name">!-数据库，redis等配置省略-</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>当项目启动时候会根据application.xml配置的active的值来启动相应的配置</p>
+<p><img src="E:\博客\blog\public\img\image-20200925111638043.png" alt="image-20200925111638043"></p>
+<p>另外在IDE 也有相应的配置，拿IDEA为例 </p>
+<p><img src="E:\博客\blog\public\img\image-20200925111905573.png" alt="image-20200925111905573"></p>
+<p>当IDE和 springboot的配置文件同时配置时，IDE的配置优先</p>
+<p><img src="E:\博客\blog\public\img\image-20200925112108649.png" alt="image-20200925112108649"></p>
+<p>那打包的时候怎么办呢，如果每次都要去改application.xml来配置，有点不够优化，也做不到解耦。这时候可以通过注入的方式来配置</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">spring:</span><br><span class="line">  profiles:</span><br><span class="line">    active: @profile@</span><br></pre></td></tr></table></figure>
+<p>那注入的值在pom.xml里配置</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">profiles</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">profile</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">id</span>&gt;</span>default<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">properties</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">profile</span>&gt;</span>dev<span class="tag">&lt;/<span class="name">profile</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">properties</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">activation</span>&gt;</span></span><br><span class="line">                <span class="comment">&lt;!-- 默认环境 --&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">activeByDefault</span>&gt;</span>true<span class="tag">&lt;/<span class="name">activeByDefault</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">activation</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">profile</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">profile</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">id</span>&gt;</span>test<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">properties</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">profile</span>&gt;</span>test<span class="tag">&lt;/<span class="name">profile</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">properties</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">profile</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">profile</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">id</span>&gt;</span>prod<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">properties</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">profile</span>&gt;</span>prod<span class="tag">&lt;/<span class="name">profile</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">properties</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">profile</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;/<span class="name">profiles</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>在上面的配置中，默认环境是defalt，属性profile的值是dev，所以编译后，会自动替换成</p>
+<p><img src="E:\博客\blog\public\img\image-20200925112832639.png" alt="image-20200925112832639"></p>
+<p>因为maven他管不了application.xml，但是pom.xml是他可以管理的范畴，所以在打包的时候只要指定相应的配置id就行了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn clean package -P test</span><br></pre></td></tr></table></figure>
+<p><img src="E:\博客\blog\public\img\image-20200925113532736.png" alt="image-20200925113532736"></p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -186,19 +243,135 @@
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=https://althars123.github.io/2020-09-19-springboot-多环境配置.html" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/network-7.html" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">计算机网络-网络安全基础</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    目录，不存在的…
+                    </div>
+                </span>
+            </div>
+        </div>
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
+
+  
+  <div id="gitment-ctn"></div> 
+<link rel="stylesheet" href="//imsun.github.io/gitment/style/default.css">
+<script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+  id: "springboot 多环境配置",
+  owner: 'Althars123',
+  repo: 'Althars123.github.io',
+  oauth: {
+    client_id: 'e60f1206e134cb96630e',
+    client_secret: '02195c5a98d79ea82b274ed26e8eca59ee70137c',
+  },
+})
+gitment.render('gitment-ctn')
+</script>
+  
 
 
           </div>
@@ -221,8 +394,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
